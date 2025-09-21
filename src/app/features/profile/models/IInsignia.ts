@@ -7,5 +7,4 @@ export interface IInsignia {
   description: string;
   dateAwarded: string;
   imageUrl: string;
-  course: ICourse;
 }
