@@ -1,0 +1,70 @@
+<p-toast />
+<div class="flex items-center justify-center min-h-screen min-w-screen overflow-hidden">
+    <div class="flex flex-col items-center justify-center">
+        <div
+            style="
+                border-radius: 56px;
+                padding: 0.3rem;
+                background: linear-gradient(
+                    180deg,
+                    var(--primary-color) 10%,
+                    rgba(33, 150, 243, 0) 30%
+                );
+            "
+        >
+            <div
+                class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20"
+                style="border-radius: 53px"
+            >
+                <div class="text-center mb-8">
+                    <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">
+                        ¡Bienvenido!
+                    </div>
+                    <span class="text-muted-color font-medium">Inicia sesión para continuar</span>
+                </div>
+
+                <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+                    <div>
+                        <p-floatlabel variant="on">
+                            <input
+                                pInputText
+                                id="email"
+                                type="email"
+                                formControlName="email"
+                                class="w-full md:w-120 mb-2"
+                            />
+                            <label for="on_label">Email</label>
+                        </p-floatlabel>
+                        @if (form.get('username')?.invalid && form.get('username')?.touched) {
+                            <div class="text-red-500 text-sm">
+                                El usuario es requerido y debe ser válido.
+                            </div>
+                        }
+                    </div>
+                    <div>
+                        <p-floatlabel variant="on">
+                            <p-password
+                                id="password1"
+                                formControlName="password"
+                                [toggleMask]="true"
+                                [fluid]="true"
+                                [feedback]="false"
+                            ></p-password>
+                            <label for="on_label">Contraseña</label>
+                        </p-floatlabel>
+                        @if (form.get('password')?.invalid && form.get('password')?.touched) {
+                            <div class="text-red-500 text-sm">La contraseña es requerida.</div>
+                        }
+                    </div>
+
+                    <p-button
+                        label="Iniciar Sesión"
+                        type="submit"
+                        styleClass="w-full"
+                        [disabled]="form.invalid"
+                    ></p-button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

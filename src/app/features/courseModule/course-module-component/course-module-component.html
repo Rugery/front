@@ -1,0 +1,68 @@
+<p-accordion [multiple]="true" [value]="['0']">
+    @for (module of modules; track module.id) {
+        <p-accordion-panel [value]="module.id.toString()">
+            <p-accordion-header> 📚 {{ module.title }} </p-accordion-header>
+            <p-accordion-content>
+                <p-table [value]="module.courses" class="shadow-md rounded-lg">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Curso</th>
+                            <th>Descripción</th>
+                            <th>Estado</th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-course>
+                        <tr>
+                            <td>{{ course.title }}</td>
+                            <td>{{ course.description }}</td>
+                            <td class="align-middle text-center">
+                                <span
+                                    class="px-3 py-1 rounded-full text-sm font-semibold inline-block"
+                                    [class.bg-gray-300]="course.status === 'NOT_STARTED'"
+                                    [class.text-gray-700]="course.status === 'NOT_STARTED'"
+                                    [class.bg-green-200]="course.status === 'COMPLETED'"
+                                    [class.text-green-700]="course.status === 'COMPLETED'"
+                                    [class.bg-yellow-200]="course.status === 'IN_PROGRESS'"
+                                    [class.text-yellow-700]="course.status === 'IN_PROGRESS'"
+                                >
+                                    @if (course.status === 'NOT_STARTED') {
+                                        No Iniciado
+                                    } @else if (course.status === 'IN_PROGRESS') {
+                                        Iniciado
+                                    } @else if (course.status === 'COMPLETED') {
+                                        Completado
+                                    }
+                                </span>
+                            </td>
+                            <td class="align-middle text-center">
+                                <div class="flex items-center justify-center gap-2">
+                                    @if (course.status === 'NOT_STARTED') {
+                                        <p-button
+                                            label="Iniciar"
+                                            icon="pi pi-play"
+                                            (onClick)="updateStatus(course, 'IN_PROGRESS')"
+                                            size="small"
+                                        />
+                                    }
+
+                                    @if (course.status === 'IN_PROGRESS') {
+                                        <p-button
+                                            label="Completar"
+                                            icon="pi pi-check"
+                                            size="small"
+                                            (onClick)="updateStatus(course, 'COMPLETED')"
+                                        />
+                                    }
+
+                                    @if (course.status === 'COMPLETED') {}
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-accordion-content>
+        </p-accordion-panel>
+    }
+</p-accordion>

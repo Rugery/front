@@ -1,0 +1,89 @@
+<p-toolbar class="mb-2">
+    <p-button label="Nuevo Curso" icon="pi pi-plus" (click)="showDialog()"></p-button>
+</p-toolbar>
+
+<p-table [value]="courses()" [paginator]="true" [rows]="10" [responsiveLayout]="'scroll'">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-course>
+        <tr>
+            <td>{{ course.title }}</td>
+            <td>{{ course.description }}</td>
+            <td>
+                <p-button
+                    icon="pi pi-pencil"
+                    class="mr-2"
+                    [rounded]="true"
+                    [outlined]="true"
+                    (click)="editCourse(course)"
+                ></p-button>
+                <p-button
+                    icon="pi pi-trash"
+                    class="mr-2"
+                    severity="danger"
+                    [rounded]="true"
+                    [outlined]="true"
+                    (click)="deleteCourse(course)"
+                ></p-button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog
+    header="{{ selectedCourse ? 'Editar Curso' : 'Nuevo Curso' }}"
+    [(visible)]="displayDialog"
+    [modal]="true"
+    [closable]="true"
+    [style]="{ width: '600px' }"
+    (onHide)="hideDialog()"
+>
+    <form [formGroup]="courseForm" class="p-fluid p-formgrid p-grid" style="gap: 1rem">
+        <div class="p-field p-col-12 p-md-12 flex items-center">
+            <label for="title" class="w-1/4 font-semibold">Título</label>
+            <input id="title" type="text" pInputText formControlName="title" class="w-3/4" />
+        </div>
+
+        <div class="p-field p-col-12 p-md-12 flex items-center">
+            <label for="description" class="w-1/4 font-semibold">Descripción</label>
+            <input
+                id="description"
+                type="text"
+                pInputText
+                formControlName="description"
+                class="w-3/4"
+            />
+        </div>
+
+        <div class="p-field p-col-12 p-md-12 flex items-center">
+            <label for="moduleId" class="w-1/4 font-semibold">Módulo</label>
+            <p-select
+                [options]="modules()"
+                formControlName="moduleId"
+                optionLabel="title"
+                optionValue="id"
+                placeholder="Selecciona un módulo"
+                class="w-3/4"
+                appendTo="body"
+            />
+        </div>
+    </form>
+
+    <ng-template #footer>
+        <p-button
+            label="Cancelar"
+            icon="pi pi-times"
+            class="p-button-text"
+            (click)="hideDialog()"
+        ></p-button>
+        <p-button label="Guardar" icon="pi pi-check" (click)="saveCourse()" />
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog />

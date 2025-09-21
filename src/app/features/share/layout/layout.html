@@ -1,0 +1,8 @@
+<p-toast />
+<p-menubar [model]="items">
+    <p-button label="Salir" icon="pi pi-sign-out" (onClick)="confirmLogout()" size="small"
+/></p-menubar>
+
+<div class="content">
+    <router-outlet></router-outlet>
+</div>

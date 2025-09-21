@@ -1,0 +1,50 @@
+<h2 class="text-2xl font-bold text-center mb-6 mt-4">Tus cursos</h2>
+
+<p-table [value]="progress">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>#</th>
+      <th>Curso</th>
+      <th>Estado</th>
+      <th>Fecha actualizado</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-p let-i="rowIndex">
+    <tr>
+      <td>{{ i + 1 }}</td>
+      <td>{{ p.courseTitle }}</td>
+      <td class="text-center">
+        @if (p.status === 'COMPLETED') {
+        <i class="pi pi-check-circle text-green-500 mr-1"></i> Completado } @else if (p.status ===
+        'IN_PROGRESS') { <i class="pi pi-spinner text-blue-500 mr-1 animate-spin"></i> En progreso }
+        @else { <i class="pi pi-times-circle text-red-500 mr-1"></i> Pendiente }
+      </td>
+      <td>
+        {{ p.dateUpdated | date : 'dd/MM/yyyy' }}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<h2 class="text-2xl font-bold text-center mb-6 mt-4">
+  <i class="pi pi-trophy" style="margin-right: 0.5em; color: gold; font-size: 1em"></i> Tus
+  insignias
+</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 justify-items-center">
+  @for (i of insignias; track i.id) {
+  <p-card [style]="{ width: '18rem', overflow: 'hidden' }">
+    <ng-template #title>
+      <i class="pi pi-trophy" style="margin-right: 0.5em; color: gold"></i>
+      {{ i.name }}</ng-template
+    >
+    <ng-template #subtitle>
+      {{ i.description }}
+    </ng-template>
+    <p>Curso: {{ i.course.title }}</p>
+
+    <p>Fecha otorgada: {{ i.dateAwarded | date }}</p>
+  </p-card>
+  } @empty {
+  <div class="text-center">No tienes insignias aún.</div>
+  }
+</div>
